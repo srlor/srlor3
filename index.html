@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SR LOR</title>
+    <style>
+        :root {
+            --main-color: #e91e63;
+            --secondary-color: #ff80ab;
+            --text-color: #4a148c;
+            --gift-color: #00c853;
+            --glow-color: #ff4081;
+            --sparkle-color: #fff59d;
+        }
+
+        body {
+            background: linear-gradient(45deg, #f8bbd0, #f48fb1);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-color);
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            opacity: 0;
+            transition: opacity 1s;
+            width: 90%;
+        }
+
+        .visible {
+            opacity: 1;
+        }
+
+        .start-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .start-btn {
+            background: var(--main-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .message-box {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            color: var(--text-color);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: messageEnter 0.8s forwards;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid var(--main-color);
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes messageEnter {
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .counter {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 30px 0;
+            color: var(--main-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .counter span {
+            position: relative;
+            display: inline-block;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); text-shadow: 0 0 10px var(--sparkle-color); }
+        }
+
+        .special-text {
+            color: var(--main-color);
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            font-size: 1.2em;
+        }
+
+        .gift-text {
+            color: var(--gift-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            padding: 10px;
+            border: 2px dashed var(--gift-color);
+            border-radius: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: var(--main-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            font-size: 1em;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .shein-btn {
+            background: #ff6b81;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+
+        .shein-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .message-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            .start-box {
+                width: 90%;
+                padding: 20px;
+            }
+            
+            .counter {
+                font-size: 3rem;
+            }
+            
+            .message-box {
+                padding: 20px;
+            }
+
+            .message-content {
+                font-size: 1em;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .shein-btn {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="start-box" id="startBox">
+        <h2>هل أنتِ مستعة؟ 💖</h2>
+        <button class="start-btn" onclick="startExperience()">نعم، هيا بنا! 🚀</button>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <div class="message-box" id="counterBox">
+            <div class="counter"><span>0</span></div>
+            <div class="nav-buttons" id="nextButton" style="display: none;">
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+
+        <div class="message-box" id="message1">
+            <div class="message-content">
+                <p>لقد مرَّ <span class="special-text">678 يومًا</span> منذ أن دخلتِ حياتي،<span class="emoji">🎈</span><br>
+                أيامٌ كانت كلوحة فنية رسمناها معًا،<span class="emoji">🎨</span><br>
+                كل يوم أضفتِ إليه لونًا جديدًا،<span class="emoji">🌈</span><br>
+                كل لحظة كنتِ نغمة جميلة في ألحان أيامي،<span class="emoji">🎶</span><br>
+                وكل ذكرى معكِ كانت شمعة تنير دربي.<span class="emoji">🕯️</span></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+        
+
+        <div class="message-box" id="message2">
+            <div class="message-content">
+                <p>🎉 رفاه الجميلة، كل عام وأنتِ بخير!<span class="emoji">🎁</span></p>
+                <p>أعلم أنني تأخرت في تهنئتكِ،<span class="emoji">⏳</span><br>
+                لكن كما يقولون: التأخير ليس نسيانًا،<span class="emoji">💭</span><br>
+                بل هو وقتٌ قضيتُه في جمع أعمق الكلمات،<span class="emoji">💌</span><br>
+                وأصدق المشاعر،<span class="emoji">💖</span><br>
+                وأجمل الذكريات، لأهديكِ لحظة مليئة بالحب والامتنان.<span class="emoji">✨</span></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+        
+        <div class="message-box" id="message3">
+            <div class="message-content">
+                <p>3/3/2025 كان يوم ميلادكِ،<span class="emoji">🎂</span><br>
+                يوم كنتُ أتمنى أن أكون فيه بجانبكِ،<span class="emoji">👫</span><br>
+                لأخبركِ كم أنتِ مميزة في نظري،<span class="emoji">💎</span><br>
+                كم أن وجودكِ يضيء أيامي،<span class="emoji">✨</span><br>
+                وكم أنكِ تستحقين كل السعادة،<span class="emoji">😊</span><br>
+                وكل لحظة احتفاء وحب في هذا العالم.<span class="emoji">🏆</span></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+        
+
+        <div class="message-box" id="message4">
+            <div class="message-content">
+                <p>🙌 شكرًا لكِ من أعماق قلبي،<span class="emoji">💓</span></p>
+                <p>منذ 10/5/2023 وأنتِ أكثر من مجرد إلهام،<span class="emoji">✨</span><br>
+                كنتِ النور الذي أضاء طريقي،<span class="emoji">🌟</span><br>
+                والسند الذي دفعني للاستمرار.<span class="emoji">🔥</span><br>
+                في البرمجة، الكتابة، وفي كل شغف زرعته في داخلي.<span class="emoji">💻📚</span><br>
+                كل إنجاز وصلتُ إليه، كان بفضل دعمكِ،<span class="emoji">🏅</span><br>
+                وكل خطوة أخطوها للأمام، أنتِ الدافع وراءها.<span class="emoji">🚀</span></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+        
+
+        <div class="message-box" id="message5">
+            <div class="message-content">
+                <p class="gift-text">بفضل الله ثم بفضلكِ، وجدت الشغف للاستمرار في عملي، وها أنا اليوم أحقق إنجازي الأول وأحصل على 200 دولار لأول مرة في حياتي.<br>
+                وها هي 100 دولار تعبير بسيط عن امتناني لكِ، هدية من القلب لمن كانت دائمًا سببًا في تقدمي ونجاحي. 💖</p>
+                <a href="https://www.shein.com" class="shein-btn" target="_blank">افتحي تطبيق SHEIN 🛍️</a>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+                <button class="nav-btn" onclick="showNext()">التالي</button>
+            </div>
+        </div>
+        
+
+        <div class="message-box" id="finalMessage">
+            <div class="message-content">
+                <p>SR LOR ليس مجرد اسم، بل حلم يُبنى خطوة بخطوة،<span class="emoji">🌟</span><br> 
+                والأجمل أن جزءًا منكِ سيكون دائمًا فيه، لأن حرفكِ هو النبض الذي يمنحه الحياة. 🚀</p>
+                <h2>R</h2>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPrev()">السابق</button>
+            </div>
+        </div>
+        
+
+    <script>
+        let currentStep = 0;
+        const steps = ['counterBox', 'message1', 'message2', 'message3', 'message4', 'message5', 'finalMessage'];
+        
+        function startExperience() {
+            document.getElementById('startBox').style.display = 'none';
+            document.getElementById('mainContainer').classList.add('visible');
+            showStep(0);
+            startCounter();
+        }
+
+        function showStep(step) {
+            steps.forEach((s, i) => {
+                document.getElementById(s).style.display = i === step ? 'block' : 'none';
+            });
+            currentStep = step;
+        }
+
+        function showNext() {
+            if(currentStep < steps.length - 1) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function showPrev() {
+            if(currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        function startCounter() {
+            let count = 0;
+            const counterElement = document.querySelector('.counter span');
+            const nextButton = document.getElementById('nextButton');
+            const timer = setInterval(() => {
+                count++;
+                counterElement.textContent = count;
+                if(count === 678) {
+                    clearInterval(timer);
+                    nextButton.style.display = 'flex';
+                }
+            }, 10);
+        }
+    </script>
+</body>
+</html>
