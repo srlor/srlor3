@@ -190,6 +190,12 @@
             margin: 0 5px;
         }
 
+        .heart {
+            color: var(--main-color);
+            font-size: 1.5em;
+            margin: 0 5px;
+        }
+
         @media (max-width: 768px) {
             .start-box {
                 width: 90%;
@@ -222,7 +228,7 @@
 </head>
 <body>
     <div class="start-box" id="startBox">
-        <h2>هل أنتِ مستعة؟ 💖</h2>
+        <h2>هل أنتِ مستعدة؟ 💖</h2>
         <button class="start-btn" onclick="startExperience()">نعم، هيا بنا! 🚀</button>
     </div>
 
@@ -314,7 +320,7 @@
             <div class="message-content">
                 <p>SR LOR ليس مجرد اسم، بل حلم يُبنى خطوة بخطوة،<span class="emoji">🌟</span><br> 
                 والأجمل أن جزءًا منكِ سيكون دائمًا فيه، لأن حرفكِ هو النبض الذي يمنحه الحياة. 🚀</p>
-                <h2>R</h2>
+                <h2>R<span class="heart">❤️</span></h2>
             </div>
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="showPrev()">السابق</button>
@@ -363,7 +369,7 @@
                     clearInterval(timer);
                     nextButton.style.display = 'flex';
                 }
-            }, 10);
+            }, -5);
         }
     </script>
 </body>
